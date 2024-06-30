@@ -10,15 +10,21 @@
 <body>
     
     <div class="box computer">
-        <button id="yes">+</button>
-        <div class="table"></div>
-        <button id="no">-</button>
+        <button id="comp-yes" class="yes-btn" onclick="yes()" disabled>+</button>
+        <div class="table">
+            <h1 class="score" id="computer-score">0</h1>
+        </div>
+        <button id="comp-no" class="no-btn" disabled>-</button>
     </div>
-
+    <!-- <div class="text-container" id="text-info">
+        <h1></h1>
+    </div> -->
     <div class="box user">
-        <button id="yes">+</button>
-        <div class="table"></div>
-        <button id="no">-</button>
+        <button id="plr-yes" class="yes-btn" onclick="choice(true)">+</button>
+        <div class="table">
+            <h1 class="score" id="player-score">0</h1>
+        </div>
+        <button id="plr-no" class="no-btn" onclick="choice(false)">-</button>
     </div>
 
 

@@ -22,12 +22,25 @@ body{
 }
 
 .table{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
     background-color: aquamarine;
     width: 80vmin;
     height: 40vmin;
     border-radius:2.5vmin;
     box-shadow: 0 0 2vmin rgba(0, 0, 0, 0.15);
     margin: 0 2vmin;
+}
+
+.table h1{
+    font-size: 10vmin;
+    color: rgb(253, 120, 32);
+}
+
+.text-container{
+    font-size: 5vmin;
+    color: white;
 }
 
 .box.computer{
@@ -37,19 +50,36 @@ body{
 .box button{
     font-weight: bold;
     font-size: 10vmin;
-    background-color: rgb(0, 229, 255);
     width: 20vmin;  
     height: 40vmin;
     border-radius: 2.5vmin;
     border: none;
     box-shadow: 0 0 2vmin rgba(0, 0, 0, 0.15);
     color: rgba(0, 0, 0, 0.276);
+    transition: 0.5s;
 }
 
-#yes{
+.box button:disabled{
+    background-color: gray;
+}
+
+.yes-btn{
     background-color: rgb(0, 255, 123);
 }
 
-#no{
+.no-btn{
     background-color: rgb(205, 93, 93);
+}
+
+#no:disabled, #yes:disabled{
+    background-color: rgb(255, 0, 0);
+}
+
+#plr-yes:hover, #plr-no:hover{
+    filter: brightness(0.9);
+}
+
+#plr-yes:active, #plr-no:active{
+    transform: translateY(1vmin);
+    filter: brightness(0.7);
 }
