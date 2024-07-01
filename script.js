@@ -125,7 +125,7 @@ function gameSet(){
     roundNumber = 0;
     data = {};
     localStorage.clear();
-    modelManager.setModel('tit');
+    modelManager.setModel('trustIssues');
     plrBtnYes.addEventListener('click', () => choice(true));
     plrBtnNo.addEventListener('click', () => choice(false));
 

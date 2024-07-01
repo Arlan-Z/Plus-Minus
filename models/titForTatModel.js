@@ -1,4 +1,4 @@
-export class TitForTit{
+export class TitForTatModel{
     decide(){
         return this.think();
     }
@@ -10,9 +10,8 @@ export class TitForTit{
         let lastRoundNumber = 0;
 
         for(const roundNumber in gameData){
-            const roundNum = parseInt(roundNumber); 
-            if (roundNum > lastRoundNumber) {
-                lastRoundNumber = roundNum;
+            if (roundNumber > lastRoundNumber) {
+                lastRoundNumber = roundNumber;
             }
         }
 
