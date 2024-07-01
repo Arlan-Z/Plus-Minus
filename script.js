@@ -73,7 +73,7 @@ function choice(ans){
 
 async function botTurn(){
     await new Promise(resolve => setTimeout(resolve, 800));
-    compAns = modelManager.getDecision();
+    compAns = await modelManager.getDecision();
     if(compAns){
         compBtnYes.disabled = false;
     }
@@ -88,20 +88,18 @@ async function results(){
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     if(compAns && playerAns) {
-        compScore += 2;
-        plrScore += 2;
+        compScore += 3;
+        plrScore += 3;
     }
     else if(!compAns && playerAns){
-        compScore += 4;
-        plrScore -= 2;
+        compScore += 5;
     }
     else if(compAns && !playerAns){
-        plrScore += 4;
-        compScore -= 2;
+        plrScore += 5;
     }
     else{
-        compScore -= 2;
-        plrScore -= 2;
+        compScore += 1;
+        plrScore += 1;
     }
     updateScores();
 
@@ -121,18 +119,13 @@ async function updateScores(){
     setTimeout(newRound, 1000);
 }
 
-function counter(scoreText, finalScore, duration = 1500) {
+function counter(scoreText, finalScore) {
     let current = parseInt(scoreText.textContent);
     let range = finalScore - current;
 
     if (range === 0) return;
 
     let increment = finalScore > current ? 1 : -1;
-    let step = Math.abs(Math.floor(duration / range));
-
-    if (step === 0) {
-        step = 1;
-    }
 
     let timer = setInterval(() => {
         current += increment;
@@ -142,14 +135,14 @@ function counter(scoreText, finalScore, duration = 1500) {
         if (current === finalScore) {
             clearInterval(timer);
         }
-    }, step);
+    }, 375);
 }
 
 function gameSet(){
     roundNumber = 0;
     data = {};
     localStorage.clear();
-    // modelManager.setModel(1);
+    // modelManager.setModel(6);
     plrBtnYes.addEventListener('click', () => choice(true));
     plrBtnNo.addEventListener('click', () => choice(false));
 
