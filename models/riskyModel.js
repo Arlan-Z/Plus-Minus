@@ -12,15 +12,11 @@ export class RiskyModel{
 
     think(){
         let gameData = JSON.parse(localStorage.getItem("gameData")) || null;
-        if(gameData == null) return true
-
-        for(const roundNumber in gameData){
-            if(gameData[roundNumber]["plr"] == false){
-                this.plrNoCnt++;
-            }
-            else this.plrYesCnt++;
-        }
         let randomNum = Math.random();
+        if(gameData == null) return randomNum < this.risk;  
+        let lastRound = Object.keys(gameData).length;
+
+        gameData[lastRound]["plr"] === false ?  this.plrNoCnt++ : this.plrYesCnt++;
 
         let allcnt = this.plrNoCnt + this.plrYesCnt;
 

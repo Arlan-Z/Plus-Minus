@@ -135,7 +135,7 @@ function counter(scoreText, finalScore) {
         if (current === finalScore) {
             clearInterval(timer);
         }
-    }, 375);
+    }, 400);
 }
 
 function gameSet(){
@@ -171,12 +171,13 @@ function createRoundCircles(){
     roundCircles = document.querySelectorAll('.info-container .round-circle');
 }
 
-function gameOver(){
+async function gameOver(){
     plrBtnNo.disabled = true;
     plrBtnYes.disabled = true;
 
     compBtnNo.disabled = true;
     compBtnYes.disabled = true;
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     if(plrScore == compScore) {
         alert("Draw");
