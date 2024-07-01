@@ -1,15 +1,15 @@
+import { modelManager } from "./modelManager.js";
+
 const compScoreText = document.getElementById("computer-score");
 const plrScoreText = document.getElementById("player-score");
 
 let compScore = 0, plrScore = 0;
 
 const plrBtnNo = document.getElementById("plr-no"),
-    pltBtnYes = document.getElementById("plr-yes");
+    plrBtnYes = document.getElementById("plr-yes");
 
 const compBtnNo = document.getElementById("comp-no"),
     compBtnYes = document.getElementById("comp-yes");
-
-// const infoText = document.getElementById("text-info");
 
 const clickSnd = new Audio('./sounds/click.wav');
 
@@ -17,8 +17,8 @@ let playerAns = null,
     compAns = null;
 
 
-startGame();
 
+gameSet();
 
 function startGame(){
     playerAns = null,
@@ -27,9 +27,8 @@ function startGame(){
     compBtnNo.disabled = true;
     compBtnYes.disabled = true;
 
-    // infoText.textContent = "Выберите Действие";
     plrBtnNo.disabled = false;
-    pltBtnYes.disabled = false;
+    plrBtnYes.disabled = false;
 }
 
 function choice(ans){
@@ -38,7 +37,7 @@ function choice(ans){
         plrBtnNo.disabled = true;
     }
     else{
-        pltBtnYes.disabled = true;
+        plrBtnYes.disabled = true;
     }
 
     playerAns = ans;
@@ -47,7 +46,7 @@ function choice(ans){
 
 async function botTurn(){
     await new Promise(resolve => setTimeout(resolve, 800));
-    compAns = Math.random() > 0.5;
+    compAns = modelManager.getDecision();
     if(compAns){
         compBtnYes.disabled = false;
     }
@@ -115,4 +114,12 @@ function counter(scoreText, finalScore, duration = 1500) {
             clearInterval(timer);
         }
     }, step);
+}
+
+function gameSet(){
+    modelManager.setModel('random');
+    plrBtnYes.addEventListener('click', () => choice(true));
+    plrBtnNo.addEventListener('click', () => choice(false));
+
+    startGame();
 }
