@@ -6,7 +6,7 @@ import { TrustIssuesModel } from './models/trustIssuesModel.js';
 import { NoModel } from './models/noModel.js';
 import { RiskyModel } from './models/riskyModel.js';
 
-class ModelManager{
+export class ModelManager{
     constructor(){
         this.models = {
             1: new RandomModel(),
@@ -36,4 +36,4 @@ class ModelManager{
     }
 }
 
-export const modelManager = new ModelManager();
+// export const modelManager = new ModelManager();

@@ -1,8 +1,8 @@
 export class RiskyModel{
     risk = Math.random() * 0.2 + 0.75;
 
-    plrYesCnt = 0;
-    plrNoCnt = 0;
+    rivalYesCnt = 0;
+    rivalNoCnt = 0;
 
     myIndex = 0;
     rivalIndex = 0;
@@ -10,7 +10,7 @@ export class RiskyModel{
     decide(index){
         this.myIndex = index;
         this.myIndex == 1 ? this.rivalIndex = 2 : this.rivalIndex = 1;
-        
+
         return this.think();
     }
 
@@ -20,12 +20,12 @@ export class RiskyModel{
         if(gameData == null) return randomNum < this.risk;  
         let lastRound = Object.keys(gameData).length;
 
-        gameData[lastRound][`plr_${this.rivalIndex}`] === false ?  this.plrNoCnt++ : this.plrYesCnt++;
+        gameData[lastRound][`plr_${this.rivalIndex}`] === false ?  this.rivalNoCnt++ : this.rivalYesCnt++;
 
-        let allcnt = this.plrNoCnt + this.plrYesCnt;
+        let allcnt = this.rivalNoCnt + this.rivalYesCnt;
 
-        let yesChance = this.plrYesCnt/allcnt;
-        let noChance = this.plrNoCnt/allcnt;
+        let yesChance = this.rivalYesCnt/allcnt;
+        let noChance = this.rivalNoCnt/allcnt;
 
         if(yesChance >= noChance) return !(this.risk > randomNum);
         return false;

@@ -1,4 +1,4 @@
-import { modelManager } from "./modelManager.js";
+import { ModelManager } from "./modelManager.js";
 
 const compScoreText = document.getElementById("computer-score");
 const plrScoreText = document.getElementById("player-score");
@@ -12,15 +12,18 @@ let roundCircles;
 
 let plrTwoScore = 0, plrOneScore = 0;
 
-const plrBtnNo = document.getElementById("plr-no"),
-    plrBtnYes = document.getElementById("plr-yes");
+const plrOneBtnNo = document.getElementById("plr-no"),
+    plrOneBtnYes = document.getElementById("plr-yes");
 
-const compBtnNo = document.getElementById("comp-no"),
-    compBtnYes = document.getElementById("comp-yes");
+const plrTwoBtnNo = document.getElementById("comp-no"),
+    plrTwoBtnYes = document.getElementById("comp-yes");
 
 const clickSnd = new Audio('./sounds/click.wav');
 
 const ROUNDS_COUNT = 5;
+const IS_HUMAN = false;
+
+let model_1,model_2;
 
 let plrOneAns = null,
     plrTwoAns = null;
@@ -31,7 +34,7 @@ let roundNumber = 0;
 
 gameSet();
 
-function newRound(){
+async function newRound(){
     updateUI();
     if(roundNumber >= ROUNDS_COUNT) {
         gameOver();
@@ -41,11 +44,20 @@ function newRound(){
     plrOneAns = null,
     plrTwoAns = null;
 
-    compBtnNo.disabled = true;
-    compBtnYes.disabled = true;
+    plrTwoBtnNo.disabled = true;
+    plrTwoBtnYes.disabled = true;
 
-    plrBtnNo.disabled = false;
-    plrBtnYes.disabled = false;
+    if(IS_HUMAN){
+        plrOneBtnNo.disabled = false;
+        plrOneBtnYes.disabled = false;
+    }
+    else{
+        plrOneBtnNo.disabled = true;
+        plrOneBtnYes.disabled = true;
+
+        botTurn(1);
+
+    }
 }
 
 function updateUI(){
@@ -61,31 +73,47 @@ function updateUI(){
 function choice(ans){
     if(plrOneAns != null) return;
     if(ans){
-        plrBtnNo.disabled = true;
+        plrOneBtnNo.disabled = true;
     }
     else{
-        plrBtnYes.disabled = true;
+        plrOneBtnYes.disabled = true;
     }
 
     plrOneAns = ans;
-    botTurn();
+    botTurn(2);
 }
 
-async function botTurn(){
-    await new Promise(resolve => setTimeout(resolve, 800));
-    plrTwoAns = await modelManager.getDecision(2);
-    if(plrTwoAns){
-        compBtnYes.disabled = false;
+async function botTurn(index){
+    await sleep(800);
+    
+    if(index == 2){
+        plrTwoAns = await model_2.getDecision(2);
+
+        if(plrTwoAns){
+            plrTwoBtnYes.disabled = false;
+        }
+        else{
+            plrTwoBtnNo.disabled = false;
+        }
+
+        results();
     }
     else{
-        compBtnNo.disabled = false;
-    }
+        plrOneAns = await model_1.getDecision(1);
 
-    results();
+        if(plrOneAns){
+            plrOneBtnYes.disabled = false;
+        }
+        else{
+            plrOneBtnNo.disabled = false;
+        }
+
+        botTurn(2);
+    }
 }
 
 async function results(){
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await sleep(1000);
 
     if(plrTwoAns && plrOneAns) {
         plrTwoScore += 3;
@@ -112,10 +140,9 @@ async function updateScores(){
 
     counter(compScoreText, plrTwoScore);
     counter(plrScoreText, plrOneScore);
-
-    await new Promise(resolve => setTimeout(resolve, 500));
     
     saveResults();
+    await sleep(500);
     setTimeout(newRound, 1000);
 }
 
@@ -139,12 +166,14 @@ function counter(scoreText, finalScore) {
 }
 
 function gameSet(){
+    model_2 = new ModelManager();
+    if(!IS_HUMAN) model_1 = new ModelManager();
     roundNumber = 0;
     data = {};
     localStorage.clear();
-    // modelManager.setModel(6);
-    plrBtnYes.addEventListener('click', () => choice(true));
-    plrBtnNo.addEventListener('click', () => choice(false));
+
+    plrOneBtnYes.addEventListener('click', () => choice(true));
+    plrOneBtnNo.addEventListener('click', () => choice(false));
 
     createRoundCircles()
     newRound();
@@ -172,15 +201,16 @@ function createRoundCircles(){
 }
 
 async function gameOver(){
-    plrBtnNo.disabled = true;
-    plrBtnYes.disabled = true;
+    plrOneBtnNo.disabled = true;
+    plrOneBtnYes.disabled = true;
 
-    compBtnNo.disabled = true;
-    compBtnYes.disabled = true;
-    await new Promise(resolve => setTimeout(resolve, 500));
+    plrTwoBtnNo.disabled = true;
+    plrTwoBtnYes.disabled = true;
+    await sleep(500);
 
     if(plrOneScore == plrTwoScore) {
-        alert("Draw");
+        plrTable.classList.add('draw');
+        compTable.classList.add('draw');
         return;
     }
     let isPlrWin = plrOneScore > plrTwoScore;
@@ -196,4 +226,8 @@ async function gameOver(){
         compTable.classList.add('winner');
         return;
     }
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

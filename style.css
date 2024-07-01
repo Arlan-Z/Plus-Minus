@@ -79,6 +79,11 @@ body{
     color: white;
 }
 
+.table.draw{
+    background-color: #767070;
+    color: white;
+}
+
 .box.computer{
     transform: rotate(180deg);
 }
