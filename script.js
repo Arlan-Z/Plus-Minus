@@ -3,6 +3,13 @@ import { modelManager } from "./modelManager.js";
 const compScoreText = document.getElementById("computer-score");
 const plrScoreText = document.getElementById("player-score");
 
+const plrTable = document.getElementById("player-table"),
+    compTable = document.getElementById("computer-table");
+
+const info = document.getElementById('info');
+
+let roundCircles;
+
 let compScore = 0, plrScore = 0;
 
 const plrBtnNo = document.getElementById("plr-no"),
@@ -12,6 +19,8 @@ const compBtnNo = document.getElementById("comp-no"),
     compBtnYes = document.getElementById("comp-yes");
 
 const clickSnd = new Audio('./sounds/click.wav');
+
+const ROUNDS_COUNT = 5;
 
 let playerAns = null,
     compAns = null;
@@ -23,6 +32,11 @@ let roundNumber = 0;
 gameSet();
 
 function newRound(){
+    updateUI();
+    if(roundNumber >= ROUNDS_COUNT) {
+        gameOver();
+        return;
+    }
     roundNumber ++;
     playerAns = null,
     compAns = null;
@@ -32,6 +46,16 @@ function newRound(){
 
     plrBtnNo.disabled = false;
     plrBtnYes.disabled = false;
+}
+
+function updateUI(){
+    roundCircles.forEach((circle, index) => {
+        if (index < roundNumber) {
+            circle.classList.add('passed');
+        } else {
+            circle.classList.remove('passed');
+        }
+    });
 }
 
 function choice(ans){
@@ -125,18 +149,57 @@ function gameSet(){
     roundNumber = 0;
     data = {};
     localStorage.clear();
-    modelManager.setModel('trustIssues');
+    // modelManager.setModel(1);
     plrBtnYes.addEventListener('click', () => choice(true));
     plrBtnNo.addEventListener('click', () => choice(false));
 
+    createRoundCircles()
     newRound();
 }
 
 function saveResults(){
     data[roundNumber] = {
         comp: compAns,
-        plr: playerAns
+        plr: playerAns,
+        compScore: compScore,
+        plrScore: plrScore
     }
 
     localStorage.setItem("gameData", JSON.stringify(data));
+}
+
+function createRoundCircles(){
+    for(let i = 0; i < ROUNDS_COUNT; i++){
+        let roundCircle = document.createElement('div');
+        roundCircle.classList.add('round-circle');
+        info.appendChild(roundCircle);
+    }
+
+    roundCircles = document.querySelectorAll('.info-container .round-circle');
+}
+
+function gameOver(){
+    plrBtnNo.disabled = true;
+    plrBtnYes.disabled = true;
+
+    compBtnNo.disabled = true;
+    compBtnYes.disabled = true;
+
+    if(plrScore == compScore) {
+        alert("Draw");
+        return;
+    }
+    let isPlrWin = plrScore > compScore;
+
+    console.log(isPlrWin);
+    if(isPlrWin){
+        plrTable.classList.add('winner');
+        compTable.classList.add('loser');
+        return;
+    }
+    else{
+        plrTable.classList.add('loser');
+        compTable.classList.add('winner');
+        return;
+    }
 }

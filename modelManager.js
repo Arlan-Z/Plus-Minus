@@ -7,14 +7,15 @@ import { TrustIssuesModel } from './models/trustIssuesModel.js';
 class ModelManager{
     constructor(){
         this.models = {
-            random: new RandomModel(),
-            aggressive: new AggressiveModel(),
-            good: new GoodModel(),
-            tit: new TitForTatModel(),
-            trustIssues: new TrustIssuesModel()
+            1: new RandomModel(),
+            2: new AggressiveModel(),
+            3: new GoodModel(),
+            4: new TitForTatModel(),
+            5: new TrustIssuesModel()
         }
 
-        this.currentModel = this.models.random;
+        this.currentModel = this.models[(Math.floor(Math.random() * Object.keys(this.models).length)) + 1];
+        console.log(this.currentModel);
     }
 
     setModel(modelName){
