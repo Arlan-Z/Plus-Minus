@@ -10,7 +10,7 @@ const info = document.getElementById('info');
 
 let roundCircles;
 
-let compScore = 0, plrScore = 0;
+let plrTwoScore = 0, plrOneScore = 0;
 
 const plrBtnNo = document.getElementById("plr-no"),
     plrBtnYes = document.getElementById("plr-yes");
@@ -22,8 +22,8 @@ const clickSnd = new Audio('./sounds/click.wav');
 
 const ROUNDS_COUNT = 5;
 
-let playerAns = null,
-    compAns = null;
+let plrOneAns = null,
+    plrTwoAns = null;
 
 let data;
 
@@ -38,8 +38,8 @@ function newRound(){
         return;
     }
     roundNumber ++;
-    playerAns = null,
-    compAns = null;
+    plrOneAns = null,
+    plrTwoAns = null;
 
     compBtnNo.disabled = true;
     compBtnYes.disabled = true;
@@ -59,7 +59,7 @@ function updateUI(){
 }
 
 function choice(ans){
-    if(playerAns != null) return;
+    if(plrOneAns != null) return;
     if(ans){
         plrBtnNo.disabled = true;
     }
@@ -67,14 +67,14 @@ function choice(ans){
         plrBtnYes.disabled = true;
     }
 
-    playerAns = ans;
+    plrOneAns = ans;
     botTurn();
 }
 
 async function botTurn(){
     await new Promise(resolve => setTimeout(resolve, 800));
-    compAns = await modelManager.getDecision();
-    if(compAns){
+    plrTwoAns = await modelManager.getDecision(2);
+    if(plrTwoAns){
         compBtnYes.disabled = false;
     }
     else{
@@ -87,19 +87,19 @@ async function botTurn(){
 async function results(){
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if(compAns && playerAns) {
-        compScore += 3;
-        plrScore += 3;
+    if(plrTwoAns && plrOneAns) {
+        plrTwoScore += 3;
+        plrOneScore += 3;
     }
-    else if(!compAns && playerAns){
-        compScore += 5;
+    else if(!plrTwoAns && plrOneAns){
+        plrTwoScore += 5;
     }
-    else if(compAns && !playerAns){
-        plrScore += 5;
+    else if(plrTwoAns && !plrOneAns){
+        plrOneScore += 5;
     }
     else{
-        compScore += 1;
-        plrScore += 1;
+        plrTwoScore += 1;
+        plrOneScore += 1;
     }
     updateScores();
 
@@ -107,11 +107,11 @@ async function results(){
 }
 
 async function updateScores(){
-    if(compScore < 0) compScore = 0;
-    if(plrScore < 0) plrScore = 0;
+    if(plrTwoScore < 0) plrTwoScore = 0;
+    if(plrOneScore < 0) plrOneScore = 0;
 
-    counter(compScoreText, compScore);
-    counter(plrScoreText, plrScore);
+    counter(compScoreText, plrTwoScore);
+    counter(plrScoreText, plrOneScore);
 
     await new Promise(resolve => setTimeout(resolve, 500));
     
@@ -152,10 +152,10 @@ function gameSet(){
 
 function saveResults(){
     data[roundNumber] = {
-        comp: compAns,
-        plr: playerAns,
-        compScore: compScore,
-        plrScore: plrScore
+        plr_1: plrOneAns,
+        plr_2: plrTwoAns,
+        plr_1_score: plrOneScore,
+        plr_2_score: plrTwoScore,
     }
 
     localStorage.setItem("gameData", JSON.stringify(data));
@@ -179,11 +179,11 @@ async function gameOver(){
     compBtnYes.disabled = true;
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    if(plrScore == compScore) {
+    if(plrOneScore == plrTwoScore) {
         alert("Draw");
         return;
     }
-    let isPlrWin = plrScore > compScore;
+    let isPlrWin = plrOneScore > plrTwoScore;
 
     console.log(isPlrWin);
     if(isPlrWin){

@@ -31,8 +31,8 @@ class ModelManager{
         }
     }
 
-    getDecision(){
-        return this.currentModel.decide();
+    getDecision(index){
+        return this.currentModel.decide(index);
     }
 }
 

@@ -1,20 +1,20 @@
 export class TitForTatModel{
-    decide(){
+    myIndex = 0;
+    rivalIndex = 0;
+
+    decide(index){
+        this.myIndex = index;
+        this.myIndex == 1 ? this.rivalIndex = 2 : this.rivalIndex = 1;
+
         return this.think();
     }
-
+    
     think(){    
         let gameData = JSON.parse(localStorage.getItem("gameData")) || null;
         if(gameData == null) return true
         
-        let lastRoundNumber = 0;
+        let lastRoundNumber = Object.keys(gameData).length;
 
-        for(const roundNumber in gameData){
-            if (roundNumber > lastRoundNumber) {
-                lastRoundNumber = roundNumber;
-            }
-        }
-
-        return gameData[lastRoundNumber]["plr"]
+        return gameData[lastRoundNumber][`plr_${this.rivalIndex}`]
     }
 }
