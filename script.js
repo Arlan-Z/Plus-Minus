@@ -21,7 +21,7 @@ const plrTwoBtnNo = document.getElementById("comp-no"),
 const clickSnd = new Audio('./sounds/click.wav');
 
 const ROUNDS_COUNT = 5;
-const IS_HUMAN = false;
+const IS_HUMAN = true;
 
 let model_1,model_2;
 
@@ -167,6 +167,7 @@ function counter(scoreText, finalScore) {
 
 function gameSet(){
     model_2 = new ModelManager();
+    model_2.setModel(14);
     if(!IS_HUMAN) model_1 = new ModelManager();
     roundNumber = 0;
     data = {};
@@ -185,6 +186,7 @@ function saveResults(){
         plr_2: plrTwoAns,
         plr_1_score: plrOneScore,
         plr_2_score: plrTwoScore,
+        round_remains: (ROUNDS_COUNT - roundNumber)
     }
 
     localStorage.setItem("gameData", JSON.stringify(data));
@@ -207,6 +209,9 @@ async function gameOver(){
     plrTwoBtnNo.disabled = true;
     plrTwoBtnYes.disabled = true;
     await sleep(500);
+
+    console.log(model_2.currentModel)
+    if(!IS_HUMAN) console.log(model_1.currentModel)
 
     if(plrOneScore == plrTwoScore) {
         plrTable.classList.add('draw');

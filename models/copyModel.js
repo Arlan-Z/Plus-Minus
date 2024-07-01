@@ -1,6 +1,4 @@
-export class RiskyModel{
-    risk = Math.random() * 0.2 + 0.75;
-
+export class CopyModel{
     rivalYesCnt = 0;
     rivalNoCnt = 0;
 
@@ -16,14 +14,13 @@ export class RiskyModel{
 
     think(){
         let gameData = JSON.parse(localStorage.getItem("gameData")) || null;
-        let randomNum = Math.random();
+        if(gameData == null) return Math.random() > 0.5;
 
-        if(gameData == null) return randomNum < this.risk;  
         let lastRound = Object.keys(gameData).length;
-
         gameData[lastRound][`plr_${this.rivalIndex}`] === false ?  this.rivalNoCnt++ : this.rivalYesCnt++;
 
-        if(this.rivalYesCnt >= this.rivalNoCnt) return !(this.risk > randomNum);
-        return false;
+        let chanceOfYes = this.rivalYesCnt / (this.rivalNoCnt + this.rivalYesCnt);
+        
+        return Math.random() <= chanceOfYes;
     }
 }
