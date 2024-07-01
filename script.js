@@ -167,7 +167,7 @@ function counter(scoreText, finalScore) {
 
 function gameSet(){
     model_2 = new ModelManager();
-    model_2.setModel(14);
+    // model_2.setModel(15);
     if(!IS_HUMAN) model_1 = new ModelManager();
     roundNumber = 0;
     data = {};

@@ -14,7 +14,8 @@ export class ModelManager {
             11: () => import('./models/adaptiveModel.js').then(m => new m.AdaptiveStrategyModel()),
             12: () => import('./models/reactiveModel.js').then(m => new m.ReactiveModel()),
             13: () => import('./models/greedyModel.js').then(m => new m.GreedyModel()),
-            14: () => import('./models/gemmaModel.js').then(m => new m.GemmaModel())
+            14: () => import('./models/gemmaModel.js').then(m => new m.GemmaModel()),
+            15: () => import('./models/dorkModel.js').then(m => new m.DorkModel())
         };
 
         this.currentModel = null;
