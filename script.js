@@ -11,6 +11,8 @@ const compBtnNo = document.getElementById("comp-no"),
 
 // const infoText = document.getElementById("text-info");
 
+const clickSnd = new Audio('./sounds/click.wav');
+
 let playerAns = null,
     compAns = null;
 
@@ -58,7 +60,7 @@ async function botTurn(){
 
 async function results(){
     await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log(playerAns + " " + compAns)
+
     if(compAns && playerAns) {
         compScore += 2;
         plrScore += 2;
@@ -83,9 +85,34 @@ async function updateScores(){
     if(compScore < 0) compScore = 0;
     if(plrScore < 0) plrScore = 0;
 
-    await new Promise(resolve => setTimeout(resolve, 500));
-    compScoreText.textContent = compScore;
-    plrScoreText.textContent = plrScore;
+    counter(compScoreText, compScore);
+    counter(plrScoreText, plrScore);
 
-    startGame();
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    setTimeout(startGame, 1000);
+}
+
+function counter(scoreText, finalScore, duration = 1500) {
+    let current = parseInt(scoreText.textContent);
+    let range = finalScore - current;
+
+    if (range === 0) return;
+
+    let increment = finalScore > current ? 1 : -1;
+    let step = Math.abs(Math.floor(duration / range));
+
+    if (step === 0) {
+        step = 1;
+    }
+
+    let timer = setInterval(() => {
+        current += increment;
+        scoreText.textContent = current;
+        clickSnd.play();
+
+        if (current === finalScore) {
+            clearInterval(timer);
+        }
+    }, step);
 }
