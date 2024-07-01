@@ -1,13 +1,15 @@
 import { RandomModel } from './models/randomModel.js';
 import { GoodModel } from './models/alwaysYesModel.js';
 import { AggressiveModel } from './models/alwaysNoModel.js';
+import { TitForTit } from './models/TitForTitModel.js';
 
 class ModelManager{
     constructor(){
         this.models = {
             random: new RandomModel(),
             aggressive: new AggressiveModel(),
-            good: new GoodModel()
+            good: new GoodModel(),
+            tit: new TitForTit()
         }
 
         this.currentModel = this.models.random;

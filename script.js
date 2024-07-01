@@ -125,7 +125,7 @@ function gameSet(){
     roundNumber = 0;
     data = {};
     localStorage.clear();
-    modelManager.setModel('aggressive');
+    modelManager.setModel('tit');
     plrBtnYes.addEventListener('click', () => choice(true));
     plrBtnNo.addEventListener('click', () => choice(false));
 
@@ -139,5 +139,4 @@ function saveResults(){
     }
 
     localStorage.setItem("gameData", JSON.stringify(data));
-    console.log(JSON.parse(localStorage.getItem("gameData")))
 }
