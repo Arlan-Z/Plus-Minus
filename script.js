@@ -16,11 +16,14 @@ const clickSnd = new Audio('./sounds/click.wav');
 let playerAns = null,
     compAns = null;
 
+let data;
 
+let roundNumber = 0;
 
 gameSet();
 
-function startGame(){
+function newRound(){
+    roundNumber ++;
     playerAns = null,
     compAns = null;
 
@@ -77,6 +80,7 @@ async function results(){
         plrScore -= 2;
     }
     updateScores();
+
     return;
 }
 
@@ -89,7 +93,8 @@ async function updateScores(){
 
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    setTimeout(startGame, 1000);
+    saveResults();
+    setTimeout(newRound, 1000);
 }
 
 function counter(scoreText, finalScore, duration = 1500) {
@@ -117,9 +122,22 @@ function counter(scoreText, finalScore, duration = 1500) {
 }
 
 function gameSet(){
-    modelManager.setModel('random');
+    roundNumber = 0;
+    data = {};
+    localStorage.clear();
+    modelManager.setModel('aggressive');
     plrBtnYes.addEventListener('click', () => choice(true));
     plrBtnNo.addEventListener('click', () => choice(false));
 
-    startGame();
+    newRound();
+}
+
+function saveResults(){
+    data[roundNumber] = {
+        comp: compAns,
+        plr: playerAns
+    }
+
+    localStorage.setItem("gameData", JSON.stringify(data));
+    console.log(JSON.parse(localStorage.getItem("gameData")))
 }
