@@ -21,7 +21,7 @@ const plrTwoBtnNo = document.getElementById("comp-no"),
 const clickSnd = new Audio('./sounds/click.wav');
 
 const ROUNDS_COUNT = 10;
-const IS_HUMAN = false;
+const IS_HUMAN = true;
 
 let model_1,model_2;
 
