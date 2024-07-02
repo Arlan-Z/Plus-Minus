@@ -35,7 +35,7 @@ export class StrategyModel{
 
         !this.lastRivalAns ?  this.rivalNoCnt++ : this.rivalYesCnt++;
 
-        if(this.risk > Math.floor()) {
+        if(this.risk > Math.random()) {
             this.risk /= 2;
             return false;
         }
