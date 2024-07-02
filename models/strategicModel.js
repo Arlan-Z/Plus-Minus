@@ -31,7 +31,6 @@ export class StrategyModel{
         if(this.rivalNoCnt > this.rivalYesCnt) this.risk += 0.1
         else this.risk -= 0.15;
 
-        console.log(gameData);
         this.lastRivalAns = gameData[lastRound][`plr_${this.rivalIndex}`];
 
         !this.lastRivalAns ?  this.rivalNoCnt++ : this.rivalYesCnt++;

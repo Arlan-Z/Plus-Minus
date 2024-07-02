@@ -15,7 +15,10 @@ export class ModelManager {
             12: () => import('./models/reactiveModel.js').then(m => new m.ReactiveModel()),
             13: () => import('./models/greedyModel.js').then(m => new m.GreedyModel()),
             14: () => import('./models/gemmaModel.js').then(m => new m.GemmaModel()),
-            15: () => import('./models/dorkModel.js').then(m => new m.DorkModel())
+            15: () => import('./models/dorkModel.js').then(m => new m.DorkModel()),
+            16: () => import('./models/fakeTitForTatModel.js').then(m => new m.FakeTitForTatModel()),
+            17: () => import('./models/forgivingModel.js').then(m => new m.ForgivingModel()),
+            18: () => import('./models/thinkingModel.js').then(m => new m.ThinkingModel())
         };
 
         this.currentModel = null;

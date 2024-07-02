@@ -20,8 +20,8 @@ const plrTwoBtnNo = document.getElementById("comp-no"),
 
 const clickSnd = new Audio('./sounds/click.wav');
 
-const ROUNDS_COUNT = 5;
-const IS_HUMAN = true;
+const ROUNDS_COUNT = 10;
+const IS_HUMAN = false;
 
 let model_1,model_2;
 
@@ -167,7 +167,7 @@ function counter(scoreText, finalScore) {
 
 function gameSet(){
     model_2 = new ModelManager();
-    // model_2.setModel(15);
+    // model_2.setModel(18);
     if(!IS_HUMAN) model_1 = new ModelManager();
     roundNumber = 0;
     data = {};
@@ -219,8 +219,7 @@ async function gameOver(){
         return;
     }
     let isPlrWin = plrOneScore > plrTwoScore;
-
-    console.log(isPlrWin);
+    
     if(isPlrWin){
         plrTable.classList.add('winner');
         compTable.classList.add('loser');
