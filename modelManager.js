@@ -1,5 +1,6 @@
 export class ModelManager {
-    constructor() {
+    constructor(index) {
+        this.index = index;
         this.models = {
             1: () => import('./models/randomModel.js').then(m => new m.RandomModel()),
             2: () => import('./models/alwaysNoModel.js').then(m => new m.AggressiveModel()),
@@ -20,7 +21,10 @@ export class ModelManager {
             17: () => import('./models/forgivingModel.js').then(m => new m.ForgivingModel()),
             18: () => import('./models/thinkingModel.js').then(m => new m.ThinkingModel()),
             19: () => import('./models/revolverModel.js').then(m => new m.RevolverModel()),
-            20: () => import('./models/visibleChanceModel.js').then(m => new m.VisibleChanceModel())
+            20: () => import('./models/visibleChanceModel.js').then(m => new m.VisibleChanceModel()),
+            21: () => import('./cheating models/thiefModel.js').then(m => new m.ThiefModel(index)),
+            22: () => import('./cheating models/oracleModel.js').then(m => new m.OracleModel(index)),
+            23: () => import('./cheating models/cheaterModel.js').then(m => new m.CheaterModel(index))
         };
 
         this.currentModel = null;

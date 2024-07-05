@@ -43,6 +43,7 @@ body{
 }
 
 .table h1{
+    position: absolute;
     font-size: 10vmin;
     text-shadow: 0 0 2vmin rgba(0, 0, 0, 0.15);;
 }
@@ -123,4 +124,26 @@ body{
 #plr-yes:active, #plr-no:active{
     transform: translateY(1vmin);
     filter: brightness(0.7);
+}
+
+.face{
+    box-shadow: 0 0 2vmin rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.687);
+    transform: rotate(180deg);
+    width: 10vmin;
+    height: 10vmin;
+    background-image: url(./images/faces/winking.png);
+    background-size: cover;
+    border-radius: 5vmin;
+    transition: 0.75s;
+}
+
+#face-indicator-plr-2{
+    position: relative;
+    top: -12.5vmin;
+}
+
+#face-indicator-plr-1{
+    position: relative;
+    top: -12.5vmin;
 }
