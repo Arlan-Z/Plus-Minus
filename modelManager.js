@@ -18,7 +18,9 @@ export class ModelManager {
             15: () => import('./models/dorkModel.js').then(m => new m.DorkModel()),
             16: () => import('./models/fakeTitForTatModel.js').then(m => new m.FakeTitForTatModel()),
             17: () => import('./models/forgivingModel.js').then(m => new m.ForgivingModel()),
-            18: () => import('./models/thinkingModel.js').then(m => new m.ThinkingModel())
+            18: () => import('./models/thinkingModel.js').then(m => new m.ThinkingModel()),
+            19: () => import('./models/revolverModel.js').then(m => new m.RevolverModel()),
+            20: () => import('./models/visibleChanceModel.js').then(m => new m.VisibleChanceModel())
         };
 
         this.currentModel = null;
