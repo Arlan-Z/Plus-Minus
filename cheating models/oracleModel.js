@@ -1,4 +1,4 @@
-import { gameInstance } from "../script.js";
+import { gameInstance } from "../scripts/script.js";
 export class OracleModel{
     myIndex = 0;
     rivalIndex = 0;

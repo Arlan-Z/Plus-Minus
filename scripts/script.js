@@ -1,6 +1,6 @@
 import { Game } from './game.js';
 
-const gameInstance = new Game(10, false);
+const gameInstance = new Game(10, true);
 gameInstance.gameSet();
 
 export {

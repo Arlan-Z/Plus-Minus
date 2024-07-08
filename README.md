@@ -6,7 +6,8 @@
 ![alt](./screenshots/rules.png)
 # Features
 New cheating Models(CM)  
-Added Mood to CM, If they are sad or angry will start use their powers
+Added Mood to CM  
+Usage of their powers depends on Mood  
 About 15 different models   
 Bot Vs Bot mode
 # Others
