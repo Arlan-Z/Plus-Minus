@@ -165,7 +165,7 @@ export class Game {
 
     gameSet() {
         this.model_2 = new ModelManager(2);
-        this.model_2.setModel(23);
+        this.model_2.setModel(21);
         if (!this.IS_HUMAN) this.model_1 = new ModelManager(1);
         this.roundNumber = 0;
         this.data = {};

@@ -33,4 +33,4 @@ export class ReactiveModel {
     }
 }
 
-// model by GPT-3
+// model by GPT-3.5
