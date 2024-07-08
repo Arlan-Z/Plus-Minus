@@ -194,7 +194,7 @@ Then copies last opponent`s answer
    - **Prioritizing Cooperation:** If the opponent intends to choose "Yes" (cooperate) and the OracleModel's score is equal to or higher than the opponent's, it will also choose "Yes" to foster cooperation and potentially gain more points.
    - **Ensuring Self-Preservation:** In all other scenarios, the OracleModel prioritizes its own gain by choosing the option that benefits it most, even if it means betraying the opponent's trust.
 
->Behaves like an Tit For Tat Model
+>Behaves like Tit For Tat Model
 
 # Thief Model
 1. **Starting with a Friendly Face:** Initially, the ThiefModel appears cooperative, with a high chance of choosing "Yes." Its mood indicator reflects a positive disposition.
